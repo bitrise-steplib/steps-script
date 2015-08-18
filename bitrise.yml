@@ -1,0 +1,32 @@
+format_version: 0.9.10
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+
+workflows:
+  test:
+    steps:
+    - path::./:
+    - path::./:
+        inputs:
+        - content: |-
+            echo "Hello, this is a Bash script!"
+    - path::./:
+        inputs:
+        - content: |-
+            puts "Hello, this is a Ruby script!"
+        - runner_bin: ruby
+    - path::./:
+        description: |-
+          This version demonstrates a full Go based `go run`,
+          with an inline declared `go` dependency.
+        dependencies:
+          - manager: brew
+            name: go
+        inputs:
+        - content: |-
+            package main
+            import "fmt"
+            func main() {
+                fmt.Println("Hello, this is a Go script!")
+            }
+        - runner_bin: go run
+        - script_file_path: main.go

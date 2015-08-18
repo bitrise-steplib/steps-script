@@ -1,5 +1,8 @@
-name: "Generic Script Runner"
-description: |
+title: Generic Script Runner
+summary: |-
+  Specify the script content and (optionally) the script runner (the
+  default runner is `/bin/bash`)
+description: |-
   Specify the script content and (optionally) the script runner
   binary and this step will execute it.
 
@@ -22,77 +25,75 @@ description: |
   If the `go` binary can be found in the PATH your Hello World
   script will run without any problem.
 website: https://github.com/bitrise-io/steps-script
-fork_url: https://github.com/bitrise-io/steps-script
-source:
-  git: https://github.com/bitrise-io/steps-script.git
+source_code_url: https://github.com/bitrise-io/steps-script
+support_url: https://github.com/bitrise-io/steps-script/issues
 host_os_tags:
   - osx-10.10
 project_type_tags: []
 type_tags:
   - script
-is_requires_admin_user: true
+is_requires_admin_user: false
+is_always_run: false
+is_skippable: false
 inputs:
-  -
-    env_key: content
-    title: "Script content"
-    description: |
-      Type your script here.
-    value: |
+  - content: |-
       #!/bin/bash
 
-      echo "Hello Generic Script Runner!"
-    is_expand: false
-    is_required: true
-  -
-    env_key: runner_bin
-    title: "Execute with / runner binary"
-    description: |
-      The executor to be used for running the script.
-      If it's available in the PATH you can just
-      specify `ruby` or `python`, generally
-      if you know the path of the executor you should
-      define that, like `/bin/bash`.
+      echo "Hello Bitrise!"
+    opts:
+      title: "Script content"
+      description: |
+        Type your script here.
+      is_expand: false
+      is_required: true
+  - runner_bin: "/bin/bash"
+    opts:
+      title: "Execute with / runner binary"
+      description: |
+        The executor to be used for running the script.
+        If it's available in the PATH you can just
+        specify `ruby` or `python`, generally
+        if you know the path of the executor you should
+        define that, like `/bin/bash`.
 
-      You can even specify an execution command
-      like `go run` instead of just a binary.
-    value: "/bin/bash"
-    is_expand: false
-    is_required: true
-  -
-    env_key: is_debug
-    title: "Debug?"
-    description: |
-      If debug=yes the step will print debug infos about
-      the working dir, tmp file path, exit code, etc.
-    value: "no"
-    value_options:
-        - no
-        - yes
-    is_expand: false
-    is_required: false
-  -
-    env_key: working_dir
-    title: "Working directory"
-    description: |
-      This directory will be set as the current working
-      directory for the script.
-    is_expand: true
-    is_required: false
-  -
-    env_key: script_file_path
-    title: "Script file path"
-    description: |
-      Save the specified script content to this path
-      before execution. The file will be removed after
-      the script finishes.
+        You can even specify an execution command
+        like `go run` instead of just a binary.
+      is_expand: false
+      is_required: true
+  - is_debug: "no"
+    opts:
+      title: "Debug?"
+      description: |
+        If debug=yes the step will print debug infos about
+        the working dir, tmp file path, exit code, etc.
+      value_options:
+        - "no"
+        - "yes"
+      is_expand: false
+      is_required: false
+  - working_dir:
+    opts:
+      title: "Working directory"
+      description: |
+        This directory will be set as the current working
+        directory for the script.
+      is_expand: true
+      is_required: false
+  - script_file_path:
+    opts:
+      title: "Script file path"
+      description: |
+        Save the specified script content to this path
+        before execution. The file will be removed after
+        the script finishes.
 
-      Generally you don't have to define this but
-      there might be cases where the file's name or path
-      actually matters.
-      For example `go run` only accepts `.go` files.
+        Generally you don't have to define this but
+        there might be cases where the file's name or path
+        actually matters.
+        For example `go run` only accepts `.go` files.
 
-      If you specify a relative path then it will be
-      relative to the *working directory* (which you
-      can optinally specify as well).
-    is_expand: true
-    is_required: false
+        If you specify a relative path then it will be
+        relative to the *working directory* (which you
+        can optinally specify as well).
+      is_expand: true
+      is_required: false
