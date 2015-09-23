@@ -1,4 +1,4 @@
-title: Generic Script Runner
+title: Script
 summary: |-
   Specify the script content and (optionally) the script runner (the
   default runner is `/bin/bash`)
