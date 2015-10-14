@@ -39,7 +39,7 @@ if [ ! -z "${script_file_path}" ] ; then
 	CONFIG_tmp_script_file_path="${script_file_path}"
 fi
 
-printf "${content}" > "${CONFIG_tmp_script_file_path}"
+echo -n "${content}" > "${CONFIG_tmp_script_file_path}"
 
 debug_echo
 ${runner_bin} "${CONFIG_tmp_script_file_path}"

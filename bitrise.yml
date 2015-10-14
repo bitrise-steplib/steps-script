@@ -23,6 +23,12 @@ workflows:
     - path::./:
         inputs:
         - content: |-
+            #!/bin/bash
+            git log -n 5 --pretty=format:"%h - %s %cr <%an>" --abbrev-commit --date=relative
+            exit 0
+    - path::./:
+        inputs:
+        - content: |-
             echo "Hello, this is a Bash script!"
             echo 'pwd test' > ./pwd_test.txt
             # ./pwd_test.txt should be created in ./_tmp
