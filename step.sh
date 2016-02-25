@@ -1,5 +1,6 @@
 #!/bin/bash
 
+export PREVIOUS_EXIT_CODE=$?
 THIS_SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 CONFIG_tmp_script_file_path="${THIS_SCRIPT_DIR}/._script_cont"
@@ -49,4 +50,5 @@ debug_echo
 debug_echo "==> Script finished with exit code: ${script_result}"
 
 rm "${CONFIG_tmp_script_file_path}"
+unset PREVIOUS_EXIT_CODE
 exit ${script_result}
