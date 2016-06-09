@@ -84,8 +84,6 @@ inputs:
       value_options:
         - "no"
         - "yes"
-      is_expand: false
-      is_required: true
   - working_dir: ""
     opts:
       title: "Working directory"
