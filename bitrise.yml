@@ -1,5 +1,11 @@
-format_version: 1.0.0
+format_version: 1.2.0
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+
+app:
+  envs:
+  # set these in your .bitrise.secrets.yml
+  #  set this to "yes" to run the Swift test
+  - IS_RUN_SWIFT_TEST: $IS_RUN_SWIFT_TEST
 
 workflows:
   test:
@@ -38,6 +44,7 @@ workflows:
             puts "Hello, this is a Ruby script!"
         - runner_bin: ruby
     - path::./:
+        run_if: enveq "IS_RUN_SWIFT_TEST" "yes"
         inputs:
         - content: |-
             print("Hello Swift!")
@@ -46,9 +53,9 @@ workflows:
         description: |-
           This version demonstrates a full Go based `go run`,
           with an inline declared `go` dependency.
-        dependencies:
-          - manager: brew
-            name: go
+        deps:
+          brew:
+            - name: go
         inputs:
         - content: |-
             package main
