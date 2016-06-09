@@ -1,7 +1,7 @@
 # Generic Script Runner Step
 
 Specify the script content and (optionally) the script runner,
-to run any custom script in your [bitrise]() workflow!
+to run any custom script in your [bitrise.io](https://www.bitrise.io/) workflow!
 
 The **runner** can even be a command, as long as it's available in the `PATH`
 and can execute the script, it will work.
