@@ -47,6 +47,7 @@ if [[ "$(basename "${runner_bin}")" == "bash" ]] ; then
 	${runner_bin} -n "${CONFIG_tmp_script_file_path}"
 	if [ $? -ne 0 ] ; then
 		echo " [!] Bash: Syntax Error!"
+		rm "${CONFIG_tmp_script_file_path}"
 		exit 1
 	fi
 fi
