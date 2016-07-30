@@ -42,6 +42,14 @@ fi
 echo -n "${content}" > "${CONFIG_tmp_script_file_path}"
 
 debug_echo
+if [[ "$(basename "${runner_bin}")" == "bash" ]] ; then
+	# bash syntax check
+	${runner_bin} -n "${CONFIG_tmp_script_file_path}"
+	if [ $? -ne 0 ] ; then
+		echo " [!] Bash: Syntax Error!"
+		exit 1
+	fi
+fi
 ${runner_bin} "${CONFIG_tmp_script_file_path}"
 script_result=$?
 

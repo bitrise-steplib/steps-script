@@ -98,8 +98,7 @@ workflows:
         inputs:
         - content: |-
             #!/bin/bash
-            set -e
-            set -x
+            set -ex
 
             bitrise share start -c ${MY_STEPLIB_REPO_FORK_GIT_URL}
 
