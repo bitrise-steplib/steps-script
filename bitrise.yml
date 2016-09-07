@@ -8,7 +8,7 @@ app:
   #  set this to "yes" to run the Swift test
   - IS_RUN_SWIFT_TEST: $IS_RUN_SWIFT_TEST
   #
-  - STEP_VERSION: 1.1.2
+  - STEP_VERSION: 1.1.3
 
 workflows:
   test:
