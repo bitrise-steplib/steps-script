@@ -105,4 +105,4 @@ inputs:
 
         If you specify a relative path then it will be
         relative to the *working directory* (which you
-        can optinally specify as well).
+        can optionally specify as well).
