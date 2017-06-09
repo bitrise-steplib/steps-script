@@ -33,7 +33,6 @@ host_os_tags:
   - ubuntu
 project_type_tags: []
 type_tags:
-  - script
   - utility
 is_requires_admin_user: false
 is_always_run: false
@@ -64,6 +63,7 @@ inputs:
       is_required: true
   - runner_bin: "/bin/bash"
     opts:
+      category: Config
       title: "Execute with / runner binary"
       description: |
         The executor to be used for running the script.
@@ -75,23 +75,19 @@ inputs:
         You can even specify an execution command
         like `go run` instead of just a binary.
       is_required: true
-  - is_debug: "no"
+  - working_dir: "$BITRISE_SOURCE_DIR"
     opts:
-      title: "Debug?"
-      description: |
-        If debug=yes the step will print debug infos about
-        the working dir, tmp file path, exit code, etc.
-      value_options:
-        - "no"
-        - "yes"
-  - working_dir: ""
-    opts:
+      category: Config
       title: "Working directory"
       description: |
         This directory will be set as the current working
         directory for the script.
+
+        Any relative path in the Script (content) will be
+        relative to this directory.
   - script_file_path: ""
     opts:
+      category: Config
       title: "Script file path"
       description: |
         Save the specified script content to this path
@@ -106,3 +102,13 @@ inputs:
         If you specify a relative path then it will be
         relative to the *working directory* (which you
         can optionally specify as well).
+  - is_debug: "no"
+    opts:
+      category: Debug
+      title: "Debug print?"
+      description: |
+        If debug=yes the step will print debug infos about
+        the working dir, tmp file path, exit code, etc.
+      value_options:
+        - "no"
+        - "yes"
