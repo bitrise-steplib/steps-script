@@ -1,14 +1,15 @@
-format_version: 1.2.0
+format_version: "2"
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 
 app:
   envs:
+  - STEP_VERSION: 1.1.4
+
   - IS_DEBUG: "no"
   # set these in your .bitrise.secrets.yml
   #  set this to "yes" to run the Swift test
   - IS_RUN_SWIFT_TEST: $IS_RUN_SWIFT_TEST
   #
-  - STEP_VERSION: 1.1.3
 
 workflows:
   test:
@@ -64,9 +65,31 @@ workflows:
         - script_file_path: main.go
         - is_debug: $IS_DEBUG
 
+  # ----------------------------------------------------------------
+  # --- workflows to create Release
+  create-release:
+    steps:
+    - script:
+        title:
+        inputs:
+        - content: |
+            #!/bin/bash
+            set -e
+
+            export CI=true
+            releaseman create --version $STEP_VERSION
 
   # ----------------------------------------------------------------
-  # --- workflows to Share this step into a Step Library
+  # --- workflow to Share this step into a Step Library
+  audit-this-step:
+    steps:
+    - script:
+        inputs:
+        - content: |-
+            #!/bin/bash
+            set -ex
+            stepman audit --step-yml ./step.yml
+
   share-this-step:
     envs:
       # if you want to share this step into a StepLib
@@ -95,6 +118,8 @@ workflows:
 
       Once it finishes the only thing left is to actually create a Pull Request,
       the way described in the guide printed at the end of the process.
+    before_run:
+    - audit-this-step
     steps:
     - script:
         inputs:
