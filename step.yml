@@ -39,7 +39,7 @@ is_always_run: false
 is_skippable: false
 inputs:
   - content: |-
-      #!/bin/bash
+      #!/usr/bin/env bash
       # fail if any commands fails
       set -e
       # debug log
