@@ -1,6 +1,11 @@
-## Changelog (Current version: 1.1.4)
+## Changelog (Current version: 1.1.5)
 
 -----------------
+
+### 1.1.5 (2017 Oct 27)
+
+* [0cf63fc] Prepare for 1.1.5
+* [62c0efd] Better default shebang (#10)
 
 ### 1.1.4 (2017 Jun 09)
 
@@ -49,4 +54,4 @@
 
 -----------------
 
-Updated: 2017 Jun 09
+Updated: 2017 Oct 27
