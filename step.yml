@@ -1,30 +1,36 @@
 title: Script
 summary: |-
-  The power is in your hands. Use it wisely!
+  Run any custom script you want. The power is in your hands. Use it wisely!
 description: |-
-  Specify the script content and (optionally) the script runner,
-  to run any custom script in your [bitrise.io](https://www.bitrise.io/) workflow!
 
-  The **runner** can even be a command, as long as it's available in the `PATH`
-  and can execute the script, it will work.
+  Run any custom script you want as part of your Bitrise build. All you need to do is specify the script runner (the default is bash), add the script, and run a build. You can also read the script from a file.
 
-  For example to run a [Go](https://golang.org/) Hello World "script"
-  you can define the content:
+  ### Configuring the Step
 
-  ```
-  package main
-  import "fmt"
-  func main() {
-      fmt.Println("Hello World")
-  }
-  ```
+  1. Set the **Execute with/runner binary** input.
 
-  Set the *Execute with* parameter to `go run` and specify
-  a *script file path* because `go run` can only accept (at the moment)
-  files with a `.go` extension (just specify `main.go` or `step.go` as the script path).
+     Either define the path of the executor, or simply just add its name if you know it is available in the PATH, such as `ruby` or `python`. It can even be a command, such as `go run`.  
 
-  If the `go` binary can be found in the `$PATH` your Hello World
-  script will run without any problem.
+  1. Write your script in the **Script content** input or specify a script file.
+
+     If you have a script in your repository, you can simply run it from the file, either by calling it in the **Script content** input or, optionally, by specifying the path to it in the **Script file path** input. Be aware that relative paths are relative to the value set in the **Working directory** input - by default, it is your app's source directory.
+
+
+  ### Troubleshooting
+
+  If the script fails, check the executor first - obviously, a Python script will not work with a bash runner.
+
+  Note that in certain cases, the filename or the filepath actually matters. For example, the `go run` command only accepts `.go` files.
+
+  ### Useful links
+
+  [System reports to check out the pre-installed executors](https://github.com/bitrise-io/bitrise.io/tree/master/system_reports)
+  [Exporting to Test Reports from custom Script Steps](https://devcenter.bitrise.io/testing/exporting-to-test-reports-from-custom-script-steps/)
+
+  ### Related Steps
+
+  [Script Runner](https://www.bitrise.io/integrations/steps/script-runner)
+  [Remote Bash Script Runner](https://www.bitrise.io/integrations/steps/remote-script-runner)
 website: https://github.com/bitrise-io/steps-script
 source_code_url: https://github.com/bitrise-io/steps-script
 support_url: https://github.com/bitrise-io/steps-script/issues
