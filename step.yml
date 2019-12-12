@@ -15,7 +15,6 @@ description: |-
 
      If you have a script in your repository, you can simply run it from the file, either by calling it in the **Script content** input or, optionally, by specifying the path to it in the **Script file path** input. Be aware that relative paths are relative to the value set in the **Working directory** input - by default, it is your app's source directory.
 
-
   ### Troubleshooting
 
   If the script fails, check the executor first - obviously, a Python script will not work with a bash runner.
