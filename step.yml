@@ -3,7 +3,10 @@ summary: |-
   Run any custom script you want. The power is in your hands. Use it wisely!
 description: |-
 
-  Run any custom script you want as part of your Bitrise build. All you need to do is specify the script runner (the default is bash), add the script, and run a build. You can also read the script from a file.
+  Run any custom script you want as part of your Bitrise build. All you need to do is specifying the script runner  
+  (the default is bash), add the script, and run a build. 
+  
+  You can also read the script from a file.
 
   ### Configuring the Step
 
@@ -13,7 +16,10 @@ description: |-
 
   1. Write your script in the **Script content** input or specify a script file.
 
-     If you have a script in your repository, you can simply run it from the file, either by calling it in the **Script content** input or, optionally, by specifying the path to it in the **Script file path** input. Be aware that relative paths are relative to the value set in the **Working directory** input - by default, it is your app's source directory.
+     If you have a script in your repository, you can simply run it from the file, either by calling it in the **Script content** input  
+     or, optionally, by specifying the path to it in the **Script file path** input. 
+     
+     Be aware that relative paths are relative to the value set in the **Working directory** input - by default, it is your app's source directory.
 
   ### Troubleshooting
 
@@ -23,13 +29,13 @@ description: |-
 
   ### Useful links
 
-  [System reports to check out the pre-installed executors](https://github.com/bitrise-io/bitrise.io/tree/master/system_reports)
-  [Exporting to Test Reports from custom Script Steps](https://devcenter.bitrise.io/testing/exporting-to-test-reports-from-custom-script-steps/)
+  * [System reports to check out the pre-installed executors](https://github.com/bitrise-io/bitrise.io/tree/master/system_reports)
+  * [Exporting to Test Reports from custom Script Steps](https://devcenter.bitrise.io/testing/exporting-to-test-reports-from-custom-script-steps/)
 
   ### Related Steps
 
-  [Script Runner](https://www.bitrise.io/integrations/steps/script-runner)
-  [Remote Bash Script Runner](https://www.bitrise.io/integrations/steps/remote-script-runner)
+  * [Script Runner](https://www.bitrise.io/integrations/steps/script-runner)
+  * [Remote Bash Script Runner](https://www.bitrise.io/integrations/steps/remote-script-runner)
 website: https://github.com/bitrise-io/steps-script
 source_code_url: https://github.com/bitrise-io/steps-script
 support_url: https://github.com/bitrise-io/steps-script/issues
