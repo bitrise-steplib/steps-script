@@ -64,6 +64,18 @@ workflows:
         - runner_bin: go run
         - script_file_path: main.go
         - is_debug: $IS_DEBUG
+    - path::./:
+        inputs:
+        - content: |-
+            set -eo pipefail
+            cd ../tests
+            testdir="$(pwd)"
+            for t in *; do
+                echo -n "| Running test $t --> "
+                "$testdir/$t"
+            done
+        - runner_bin: bash
+        - is_debug: $IS_DEBUG
 
   # ----------------------------------------------------------------
   # --- workflows to create Release
