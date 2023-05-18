@@ -21,6 +21,16 @@ function debug_echo {
 	fi
 }
 
+function run_bash {
+	# bash syntax check
+	${runner_bin} -n "${CONFIG_tmp_script_file_path}"
+	if [ $? -ne 0 ] ; then
+		echo " [!] Bash: Syntax Error!"
+		rm "${CONFIG_tmp_script_file_path}"
+		exit 1
+	fi
+	${runner_bin} "${CONFIG_tmp_script_file_path}"
+}
 
 debug_echo
 debug_echo "==> Start"
@@ -43,15 +53,10 @@ cat <<< "${content}" > "${CONFIG_tmp_script_file_path}"
 
 debug_echo
 if [[ "$(basename "${runner_bin}")" == "bash" ]] ; then
-	# bash syntax check
-	${runner_bin} -n "${CONFIG_tmp_script_file_path}"
-	if [ $? -ne 0 ] ; then
-		echo " [!] Bash: Syntax Error!"
-		rm "${CONFIG_tmp_script_file_path}"
-		exit 1
-	fi
+	run_bash
+else
+	${runner_bin} "${CONFIG_tmp_script_file_path}"
 fi
-${runner_bin} "${CONFIG_tmp_script_file_path}"
 script_result=$?
 
 debug_echo
