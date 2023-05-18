@@ -22,6 +22,12 @@ function debug_echo {
 }
 
 function run_bash {
+	if has_shebang "${CONFIG_tmp_script_file_path}"; then
+		chmod +x "${CONFIG_tmp_script_file_path}"
+		"${CONFIG_tmp_script_file_path}"
+		return
+	fi
+
 	# bash syntax check
 	${runner_bin} -n "${CONFIG_tmp_script_file_path}"
 	if [ $? -ne 0 ] ; then
@@ -30,6 +36,16 @@ function run_bash {
 		exit 1
 	fi
 	${runner_bin} "${CONFIG_tmp_script_file_path}"
+}
+
+function has_shebang {
+	local file="$1"
+	local topline="$(head -n1 "$file")"
+	if [[ "${topline:0:2}" == "#!" ]]; then
+		true
+	else
+		false
+	fi
 }
 
 debug_echo
