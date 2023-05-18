@@ -39,7 +39,7 @@ if [ ! -z "${script_file_path}" ] ; then
 	CONFIG_tmp_script_file_path="${script_file_path}"
 fi
 
-echo -n "${content}" > "${CONFIG_tmp_script_file_path}"
+cat <<< "${content}" > "${CONFIG_tmp_script_file_path}"
 
 debug_echo
 if [[ "$(basename "${runner_bin}")" == "bash" ]] ; then
