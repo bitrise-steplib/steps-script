@@ -1,0 +1,86 @@
+format_version: "11"
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+
+workflows:
+  test_default_content:
+    steps:
+    - change-workdir:
+        inputs:
+        - path: ./_tmp
+    - path::./:
+        inputs:
+        - is_debug: $IS_DEBUG
+
+  test_git_log:
+    steps:
+    - change-workdir:
+        inputs:
+        - path: ./_tmp
+    - path::./:
+        inputs:
+        - content: |-
+            #!/bin/bash
+            git log -n 5 --pretty=format:"%h - %s %cr <%an>" --abbrev-commit --date=relative
+            exit 0
+        - is_debug: $IS_DEBUG
+
+  test_echo:
+    steps:
+    - change-workdir:
+        inputs:
+        - path: ./_tmp
+    - path::./:
+        inputs:
+        - content: |-
+            echo "Hello, this is a Bash script!"
+            echo 'pwd test' > ./pwd_test.txt
+            # ./pwd_test.txt should be created in ./_tmp
+        - is_debug: $IS_DEBUG
+
+  test_ruby:
+    steps:
+    - change-workdir:
+        inputs:
+        - path: ./_tmp
+    - path::./:
+        inputs:
+        - content: |-
+            puts "Hello, this is a Ruby script!"
+        - runner_bin: ruby
+        - is_debug: $IS_DEBUG
+
+  test_swift:
+    steps:
+    - change-workdir:
+        inputs:
+        - path: ./_tmp
+    - path::./:
+        run_if: enveq "IS_RUN_SWIFT_TEST" "yes"
+        inputs:
+        - content: |-
+            print("Hello Swift!")
+        - runner_bin: swift
+        - is_debug: $IS_DEBUG
+
+  test_go:
+    steps:
+    - change-workdir:
+        inputs:
+        - path: ./_tmp
+    - path::./:
+        description: |-
+          This version demonstrates a full Go based `go run`,
+          with an inline declared `go` dependency.
+        deps:
+          brew:
+          - name: go
+        inputs:
+        - content: |-
+            package main
+            import "fmt"
+            func main() {
+                fmt.Println("Hello, this is a Go script!")
+            }
+        - runner_bin: go run
+        - script_file_path: main.go
+        - is_debug: $IS_DEBUG
