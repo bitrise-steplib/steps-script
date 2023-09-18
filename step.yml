@@ -29,7 +29,7 @@ description: |-
 
   ### Useful links
 
-  * [System reports to check out the pre-installed executors](https://github.com/bitrise-io/bitrise.io/tree/master/system_reports)
+  * [System reports to check out the pre-installed executors](https://stacks.bitrise.io)
   * [Exporting to Test Reports from custom Script Steps](https://devcenter.bitrise.io/testing/exporting-to-test-reports-from-custom-script-steps/)
 
   ### Related Steps

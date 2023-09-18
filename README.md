@@ -1,101 +1,80 @@
-# Generic Script Runner Step
+# Script
 
-Specify the script content and (optionally) the script runner,
-to run any custom script in your [bitrise.io](https://www.bitrise.io/) workflow!
+[![Step changelog](https://shields.io/github/v/release/bitrise-io/steps-script?include_prereleases&label=changelog&color=blueviolet)](https://github.com/bitrise-io/steps-script/releases)
 
-The **runner** can even be a command, as long as it's available in the `PATH`
-and can execute the script, it will work.
+Run any custom script you want. The power is in your hands. Use it wisely!
 
-For example to run a [Go](https://golang.org/) Hello World "script"
-you can define the content:
-
-```
-package main
-import "fmt"
-func main() {
-    fmt.Println("Hello World")
-}
-```
-
-Set the *Execute with* parameter to `go run` and specify
-a *script file path* because `go run` can only accept (at the moment)
-files with a `.go` extension (just specify `main.go` or `step.go` as the script path).
-
-If the `go` binary can be found in the `$PATH` your Hello World
-script will run without any problem.
+<details>
+<summary>Description</summary>
 
 
-## How to use this Step
+Run any custom script you want as part of your Bitrise build. All you need to do is specifying the script runner  
+(the default is bash), add the script, and run a build. 
 
-Can be run directly with the [bitrise CLI](https://github.com/bitrise-io/bitrise),
-just `git clone` this repository, `cd` into it's folder in your Terminal/Command Line
-and call `bitrise run test`.
+You can also read the script from a file.
 
-*Check the `bitrise.yml` file for required inputs which have to be
-added to your `.bitrise.secrets.yml` file!*
+### Configuring the Step
 
-Step by step:
+1. Set the **Execute with/runner binary** input.
 
-1. Open up your Terminal / Command Line
-2. `git clone` the repository
-3. `cd` into the directory of the step (the one you just `git clone`d)
-5. Create a `.bitrise.secrets.yml` file in the same directory of `bitrise.yml` - the `.bitrise.secrets.yml` is a git ignored file, you can store your secrets in
-6. Check the `bitrise.yml` file for any secret you should set in `.bitrise.secrets.yml`
-  * Best practice is to mark these options with something like `# define these in your .bitrise.secrets.yml`, in the `app:envs` section.
-7. Once you have all the required secret parameters in your `.bitrise.secrets.yml` you can just run this step with the [bitrise CLI](https://github.com/bitrise-io/bitrise): `bitrise run test`
+   Either define the path of the executor, or simply just add its name if you know it is available in the PATH, such as `ruby` or `python`. It can even be a command, such as `go run`.  
 
-An example `.bitrise.secrets.yml` file:
+1. Write your script in the **Script content** input or specify a script file.
 
-```
-envs:
-- A_SECRET_PARAM_ONE: the value for secret one
-- A_SECRET_PARAM_TWO: the value for secret two
-```
+   If you have a script in your repository, you can simply run it from the file, either by calling it in the **Script content** input  
+   or, optionally, by specifying the path to it in the **Script file path** input. 
+   
+   Be aware that relative paths are relative to the value set in the **Working directory** input - by default, it is your app's source directory.
 
-## How to create your own step
+### Troubleshooting
 
-1. Create a new git repository for your step (**don't fork** the *step template*, create a *new* repository)
-2. Copy the [step template](https://github.com/bitrise-steplib/step-template) files into your repository
-3. Fill the `step.sh` with your functionality
-4. Wire out your inputs to `step.yml` (`inputs` section)
-5. Fill out the other parts of the `step.yml` too
-6. Provide test values for the inputs in the `bitrise.yml`
-7. Run your step with `bitrise run test` - if it works, you're ready
+If the script fails, check the executor first - obviously, a Python script will not work with a bash runner.
 
-**NOTE:**
+Note that in certain cases, the filename or the filepath actually matters. For example, the `go run` command only accepts `.go` files.
 
-If you want to use your step in your project's `bitrise.yml`:
+### Useful links
 
-1. git push the step into it's repository
-2. reference it in your `bitrise.yml` with the `git::PUBLIC-GIT-CLONE-URL@BRANCH` step reference style:
+* [System reports to check out the pre-installed executors](https://stacks.bitrise.io)
+* [Exporting to Test Reports from custom Script Steps](https://devcenter.bitrise.io/testing/exporting-to-test-reports-from-custom-script-steps/)
 
-```
-- git::https://github.com/user/my-step.git@branch:
-   title: My step
-   inputs:
-   - my_input_1: "my value 1"
-   - my_input_2: "my value 2"
-```
+### Related Steps
 
-You can find more examples of step reference styles
-in the [bitrise CLI repository](https://github.com/bitrise-io/bitrise/blob/master/_examples/tutorials/steps-and-workflows/bitrise.yml#L65).
+* [Script Runner](https://www.bitrise.io/integrations/steps/script-runner)
+* [Remote Bash Script Runner](https://www.bitrise.io/integrations/steps/remote-script-runner)
+</details>
 
-## How to contribute to this Step
+## 🧩 Get started
 
-1. Fork this repository
-2. `git clone` it
-3. Create a branch you'll work on
-4. To use/test the step just follow the **How to use this Step** section
-5. Do the changes you want to
-6. Run/test the step before sending your contribution
-  * You can also test the step in your `bitrise` project, either on your Mac or on [bitrise.io](https://www.bitrise.io)
-  * You just have to replace the step ID in your project's `bitrise.yml` with either a relative path, or with a git URL format
-  * (relative) path format: instead of `- original-step-id:` use `- path::./relative/path/of/script/on/your/Mac:`
-  * direct git URL format: instead of `- original-step-id:` use `- git::https://github.com/user/step.git@branch:`
-  * You can find more example of alternative step referencing at: https://github.com/bitrise-io/bitrise/blob/master/_examples/tutorials/steps-and-workflows/bitrise.yml
-7. Once you're done just commit your changes & create a Pull Request
+Add this step directly to your workflow in the [Bitrise Workflow Editor](https://devcenter.bitrise.io/steps-and-workflows/steps-and-workflows-index/).
 
+You can also run this step directly with [Bitrise CLI](https://github.com/bitrise-io/bitrise).
 
-## Share your own Step
+## ⚙️ Configuration
 
-You can share your Step or step version with the [bitrise CLI](https://github.com/bitrise-io/bitrise). Just run `bitrise share` and follow the guide it prints.
+<details>
+<summary>Inputs</summary>
+
+| Key | Description | Flags | Default |
+| --- | --- | --- | --- |
+| `content` | Type your script here.  **Make sure that it returns a non zero exit code in case of an error!** The step will only fail if your script returns with a non zero exit code!  | required | `#!/usr/bin/env bash # fail if any commands fails set -e # make pipelines' return status equal the last command to exit with a non-zero status, or zero if all commands exit successfully set -o pipefail # debug log set -x  # write your script here echo "Hello World!"  # or run a script from your repository, like: # bash ./path/to/script.sh # not just bash, e.g.: # ruby ./path/to/script.rb` |
+| `runner_bin` | The executor to be used for running the script. If it's available in the PATH you can just specify `ruby` or `python`, generally if you know the path of the executor you should define that, like `/bin/bash`.  You can even specify an execution command like `go run` instead of just a binary.  | required | `/bin/bash` |
+| `working_dir` | This directory will be set as the current working directory for the script.  Any relative path in the Script (content) will be relative to this directory.  |  | `$BITRISE_SOURCE_DIR` |
+| `script_file_path` | Save the specified script content to this path before execution. The file will be removed after the script finishes.  Generally you don't have to define this but there might be cases where the file's name or path actually matters. For example `go run` only accepts `.go` files.  If you specify a relative path then it will be relative to the *working directory* (which you can optionally specify as well).  |  |  |
+| `is_debug` | If debug=yes the step will print debug infos about the working dir, tmp file path, exit code, etc.  |  | `no` |
+</details>
+
+<details>
+<summary>Outputs</summary>
+There are no outputs defined in this step
+</details>
+
+## 🙋 Contributing
+
+We welcome [pull requests](https://github.com/bitrise-io/steps-script/pulls) and [issues](https://github.com/bitrise-io/steps-script/issues) against this repository.
+
+For pull requests, work on your changes in a forked repository and use the Bitrise CLI to [run step tests locally](https://devcenter.bitrise.io/bitrise-cli/run-your-first-build/).
+
+Learn more about developing steps:
+
+- [Create your own step](https://devcenter.bitrise.io/contributors/create-your-own-step/)
+- [Testing your Step](https://devcenter.bitrise.io/contributors/testing-and-versioning-your-steps/)
