@@ -21,6 +21,32 @@ function debug_echo {
 	fi
 }
 
+function run_bash {
+	if has_shebang "${CONFIG_tmp_script_file_path}"; then
+		chmod +x "${CONFIG_tmp_script_file_path}"
+		"${CONFIG_tmp_script_file_path}"
+		return
+	fi
+
+	# bash syntax check
+	${runner_bin} -n "${CONFIG_tmp_script_file_path}"
+	if [ $? -ne 0 ] ; then
+		echo " [!] Bash: Syntax Error!"
+		rm "${CONFIG_tmp_script_file_path}"
+		exit 1
+	fi
+	${runner_bin} "${CONFIG_tmp_script_file_path}"
+}
+
+function has_shebang {
+	local file="$1"
+	local topline="$(head -n1 "$file")"
+	if [[ "${topline:0:2}" == "#!" ]]; then
+		true
+	else
+		false
+	fi
+}
 
 debug_echo
 debug_echo "==> Start"
@@ -39,19 +65,14 @@ if [ ! -z "${script_file_path}" ] ; then
 	CONFIG_tmp_script_file_path="${script_file_path}"
 fi
 
-echo -n "${content}" > "${CONFIG_tmp_script_file_path}"
+cat <<< "${content}" > "${CONFIG_tmp_script_file_path}"
 
 debug_echo
 if [[ "$(basename "${runner_bin}")" == "bash" ]] ; then
-	# bash syntax check
-	${runner_bin} -n "${CONFIG_tmp_script_file_path}"
-	if [ $? -ne 0 ] ; then
-		echo " [!] Bash: Syntax Error!"
-		rm "${CONFIG_tmp_script_file_path}"
-		exit 1
-	fi
+	run_bash
+else
+	${runner_bin} "${CONFIG_tmp_script_file_path}"
 fi
-${runner_bin} "${CONFIG_tmp_script_file_path}"
 script_result=$?
 
 debug_echo
